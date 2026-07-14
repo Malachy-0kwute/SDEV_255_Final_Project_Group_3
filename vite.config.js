@@ -5,7 +5,8 @@ import react from '@vitejs/plugin-react'
 export default defineConfig(({command}) => ({
   plugins: [react()],
   // base: command === 'build' ? '/SDEV_255_Final_Project_Group_3/' : '/',
-  base: '/SDEV_255_Final_Project_Group_3/',
+  // base: '/SDEV_255_Final_Project_Group_3/',
+  base: '/',
   build: {
     outDir: 'docs',
   },
