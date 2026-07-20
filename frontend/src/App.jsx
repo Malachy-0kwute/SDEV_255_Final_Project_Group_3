@@ -38,7 +38,7 @@ function App() {
       <Navbar />
 
       <Routes>
-        <Route path="/" element={<Home />} />
+        <Route path="/SDEV_255_Final_Project_Group_3" element={<Home />} />
         <Route
           path="/courses"
           element={<Courses courses={courses} />}
