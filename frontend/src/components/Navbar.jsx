@@ -5,12 +5,12 @@ function Navbar() {
     <nav className="navbar navbar-dark bg-success">
       <div className="container d-flex justify-content-between align-items-center">
 
-        <Link className="navbar-brand fw-bold" to="/SDEV_255_Final_Project_Group_3">
+        <Link className="navbar-brand fw-bold" to="/">
           Ivy Tech Community College
         </Link>
 
         <div className="d-flex gap-3">
-          <Link className="nav-link text-white" to="/SDEV_255_Final_Project_Group_3">
+          <Link className="nav-link text-white" to="/">
             Home
           </Link>
 
