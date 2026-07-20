@@ -16,7 +16,7 @@ const courseSchema = new mongoose.Schema({
 
   // course credit
   courseCredit: {
-    type: Int32,
+    type: Number,
     required: true
   },
 
@@ -26,9 +26,10 @@ const courseSchema = new mongoose.Schema({
   // created date
   createdAt: {
     type: Date,
-    default: Date.now
+    default: Date.now,
+    timestamps: true 
   }
 });
 
 // course model
-module.exports = mongoose.model('CourseModel', courseSchema);
+module.exports = mongoose.model('Courses', courseSchema);

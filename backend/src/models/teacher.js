@@ -29,7 +29,8 @@ const teacherSchema = new mongoose.Schema({
     // created date
   createdAt: {
     type: Date,
-    default: Date.now
+    default: Date.now,
+    timestamps: true
   }
 });
 
