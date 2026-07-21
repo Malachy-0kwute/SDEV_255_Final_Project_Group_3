@@ -2,6 +2,7 @@ const mongoose = require('mongoose');
 
 // teacher schema
 const teacherSchema = new mongoose.Schema({
+  
   // firstname
   firstName: {
     type: String,
