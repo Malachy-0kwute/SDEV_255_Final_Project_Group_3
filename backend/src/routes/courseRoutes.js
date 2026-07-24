@@ -40,11 +40,12 @@ router.get('/:id', async (req, res) => {
 // create a course
 router.post('/', async (req, res) => {
   const course = new Course({
-    courseCode: req.body.courseCode,
-    courseTitle: req.body.courseTitle,
-    courseCredit: req.body.courseCredit,
-    courseDescription: req.body.courseDescription
-  });
+  courseCode: req.body.courseCode,
+  courseTitle: req.body.courseTitle,
+  courseSubject: req.body.courseSubject,
+  courseCredit: req.body.courseCredit,
+  courseDescription: req.body.courseDescription
+});
 
   try {
     const newCourse = await course.save();
@@ -73,6 +74,7 @@ router.put('/:id', async (req, res) => {
     // TODO: verify that date updates automatically
     course.courseCode = req.body.courseCode;
     course.courseTitle = req.body.courseTitle;
+    course.courseSubject = req.body.courseSubject;
     course.courseCredit = req.body.courseCredit;
     course.courseDescription = req.body.courseDescription;
     
