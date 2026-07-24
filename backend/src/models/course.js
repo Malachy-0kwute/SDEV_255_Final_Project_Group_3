@@ -14,6 +14,12 @@ const courseSchema = new mongoose.Schema({
     required: true
   },
 
+  //course subject
+  courseSubject: {
+  type: String,
+  required: true
+},
+
   // course credit
   courseCredit: {
     type: Number,
