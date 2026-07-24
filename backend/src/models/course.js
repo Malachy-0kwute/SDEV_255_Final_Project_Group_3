@@ -2,39 +2,52 @@ const mongoose = require('mongoose');
 
 // schema
 const courseSchema = new mongoose.Schema({
-  // course code
-  courseCode: {
-    type: String,
-    required: true
-  },
-
+  
   // course title
   courseTitle: {
     type: String,
     required: true
   },
 
-  //course subject
-  courseSubject: {
-  type: String,
-  required: true
-},
+  // course code
+  courseCode: {
+    type: String,
+    required: true
+  },
 
-  // course credit
+  // prerequisites
+  coursePrerequisites: [String],
+
+  // STEM math
+  courseStemMath: [String],
+
+  // Program
+  courseProgram: String,
+
+  // course credit hours
   courseCredit: {
     type: Number,
     required: true
   },
 
+  // lecture hours
+  courseLectureHours: Number,
+
+  // date of last revision
+  courseLastRevisionDate: Date,
+
   // course description
   courseDescription: String,
+
+  // major learning objectives
+  courseLearningObjectives: [String],
 
   // created date
   createdAt: {
     type: Date,
     default: Date.now,
     timestamps: true 
-  }
+  }  
 });
 
 // course model

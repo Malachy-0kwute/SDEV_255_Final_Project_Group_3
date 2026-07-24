@@ -32,12 +32,15 @@ router.get('/:id', async (req, res) => {
 
 // create a teacher
 router.post('/', async (req, res) => {
-  const teacher = new Teacher({
-    firstName: req.body.firstName,
-    lastName: req.body.lastName,
-    email: req.body.email,
-    password: req.body.password,
-  });
+
+  // const teacher = new Teacher({
+  //   firstName: req.body.firstName,
+  //   lastName: req.body.lastName,
+  //   email: req.body.email,
+  //   password: req.body.password,
+  // });
+
+ const teacher = new Teacher(req.body);
 
   try {
     const newTeacher = await teacher.save();
@@ -49,22 +52,23 @@ router.post('/', async (req, res) => {
 
 // update a teacher
 router.put('/:id', async (req, res) => {
+
   const teacherId = req.params.id;
     
-  const teacher = await Teacher.findById(teacherId);
+  // const teacher = await Teacher.findById(teacherId);
 
-  if (student == null) {
-    return res.status(404).json({ message: 'Unable to modify teacher information; Teacher not found.' });
-  }
+  // if (student == null) {
+  //   return res.status(404).json({ message: 'Unable to modify teacher information; Teacher not found.' });
+  // }
 
-  teacher.firstName = req.body.firstName;
-  teacher.lastName = req.body.lastName;
-  teacher.email = req.body.email;
-  teacher.password = req.body.password; // TODO: Implement authentication and authorization properly.
+  // teacher.firstName = req.body.firstName;
+  // teacher.lastName = req.body.lastName;
+  // teacher.email = req.body.email;
+  // teacher.password = req.body.password; // TODO: Implement authentication and authorization properly.
     
   try {
     // save the newly modified data.
-    const newTeacher = await teacher.save();
+    const newTeacher = await Teacher.updateone({_id: teacherId}, req.body);
     res.status(201).json(newTeacher);
   } catch (error) {
     res.status(400).json({ message: error.message });
@@ -75,14 +79,14 @@ router.put('/:id', async (req, res) => {
 router.delete('/:id', async (req, res) => {
   const teacherId = req.params.id;
 
-  const teacher = await Teacher.findById(teacherId);
+  // const teacher = await Teacher.findById(teacherId);
 
-  if (teacher == null) {
-    return res.status(404).json({ message: 'Teacher record not found.' });
-  }
+  // if (teacher == null) {
+  //   return res.status(404).json({ message: 'Teacher record not found.' });
+  // }
 
   try {
-    await teacher.deleteOne()
+    await Teacher.deleteOne({_id: teacherId});
     res.json('Teacher record deleted.');
   } catch (error) {
     res.status(500).json({message: error.message});
