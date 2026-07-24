@@ -39,12 +39,15 @@ router.get('/:id', async (req, res) => {
 
 // create a course
 router.post('/', async (req, res) => {
-  const course = new Course({
-    courseCode: req.body.courseCode,
-    courseTitle: req.body.courseTitle,
-    courseCredit: req.body.courseCredit,
-    courseDescription: req.body.courseDescription
-  });
+
+  // const course = new Course({
+  //   courseCode: req.body.courseCode,
+  //   courseTitle: req.body.courseTitle,
+  //   courseCredit: req.body.courseCredit,
+  //   courseDescription: req.body.courseDescription
+  // });
+
+  const course = new Course(req.body);
 
   try {
     const newCourse = await course.save();
@@ -61,23 +64,23 @@ router.put('/:id', async (req, res) => {
     const courseId = req.params.id;
 
     // get course
-    const course = await Course.findById(courseId);
+    // const course = await Course.findById(courseId);
 
     // if course is not found...
-    if (course == null) {
-      // return error message
-      return res.status(404).json({ message: 'Unable to modify course information; Course not found.' });
-    }
+    // if (course == null) {
+    //   // return error message
+    //   return res.status(404).json({ message: 'Unable to modify course information; Course not found.' });
+    // }
 
     // wire incoming data
     // TODO: verify that date updates automatically
-    course.courseCode = req.body.courseCode;
-    course.courseTitle = req.body.courseTitle;
-    course.courseCredit = req.body.courseCredit;
-    course.courseDescription = req.body.courseDescription;
+    // course.courseCode = req.body.courseCode;
+    // course.courseTitle = req.body.courseTitle;
+    // course.courseCredit = req.body.courseCredit;
+    // course.courseDescription = req.body.courseDescription;
     
     try {
-      const newCourse = await course.save();
+      const newCourse = await Course.updateOne({_id: courseId}, req.body)
       res.status(201).json(newCourse);
     } catch (error) {
       res.status(400).json({ message: error.message });
@@ -91,16 +94,16 @@ router.delete('/:id', async (req, res) => {
   const courseId = req.params.id;
 
   // get course
-  const course = await Course.findById(courseId);
+  // const course = await Course.findById(courseId);
 
-  // if course is not found...
-  if (course == null) {
-    // return error message
-    return res.status(404).json({ message: 'Course record not found.' });
-  }
+  // // if course is not found...
+  // if (course == null) {
+  //   // return error message
+  //   return res.status(404).json({ message: 'Course record not found.' });
+  // }
   
   try {
-    await course.deleteOne();
+    await Course.deleteOne({_id: courseId});
     res.json('Course record deleted.');
   } catch (error) {
     res.status(500).json({message: error.message});
