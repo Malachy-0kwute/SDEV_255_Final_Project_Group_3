@@ -19,7 +19,10 @@ connectDB();
 app.use(cors());
 app.use(express.json());
 
+// define endpoints.
 app.use("/api/course", courseRoutes);
+app.use("/api/student", studentRoutes);
+app.use("/api/teacher", teacherRoutes);
 
 app.listen(port, '0.0.0.0', () => {
   console.log(`Server is running...`);
