@@ -7,7 +7,8 @@
     "sqlite": "^5.1.1"
   },
   "scripts": {
-    "server": "nodemon server.js"
+    "dev-server": "nodemon server.js",
+    "live-server": "node server.js"
   },
   "allowScripts": {
     "sqlite@5.1.1": true,
