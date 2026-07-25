@@ -10,7 +10,7 @@ const studentRoutes = require("./src/routes/studentRoutes");
 const teacherRoutes = require("./src/routes/teachersRoutes");
 
 const app = express();
-const port = 3000;
+const port = 5000;
 
 // connect to db
 connectDB();
@@ -21,6 +21,6 @@ app.use(express.json());
 
 app.use("/api/course", courseRoutes);
 
-app.listen(port, () => {
-  console.log(`Server is running on http://localhost:${port}`);
+app.listen(port, '0.0.0.0', () => {
+  console.log(`Server is running...`);
 });
