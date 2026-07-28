@@ -28,8 +28,8 @@ const userSchema = new mongoose.Schema({
 
   // true is user is a student... otherwise false
   isStudent: { 
-    type: Boolean, 
-    require: true
+    type: Boolean,
+    default: false
   },
 
     // created date

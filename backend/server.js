@@ -22,9 +22,12 @@ app.use(express.json());
 
 // define endpoints.
 app.use("/api/course", courseRoutes);
+app.use("/api/auth", authRoutes);
+
+//#region Deprecated
 // app.use("/api/student", studentRoutes);
 // app.use("/api/teacher", teacherRoutes);
-app.use("/api/auth", authRoutes);
+//#endregion
 
 app.listen(port, '0.0.0.0', () => {
   console.log(`Server is running...`);

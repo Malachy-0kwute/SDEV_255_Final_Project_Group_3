@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const Course = require('../models/course');
+const jwt = require('jwt-simple');
 
 // get all courses
 // TODO: get only a specific amount of courses at a time
@@ -40,6 +41,20 @@ router.get('/:id', async (req, res) => {
 // create a course
 router.post('/', async (req, res) => {
 
+  const authHeader = req.headers.authorization;
+
+  if (!authHeader) {
+    return res.status(401).json({ error: 'Unauthorized. No token provided'});
+  }
+
+  const token = authHeader.split(' ')[1];
+
+  const decodedToken = jwt.decode(token, 'supersecret');
+
+  if (decodedToken.isStudent) {
+    return res.json({message: 'Unauthorized'});
+  }
+
   const course = new Course(req.body);
 
   try {
@@ -53,19 +68,47 @@ router.post('/', async (req, res) => {
 // update a course
 router.put('/:id', async (req, res) => {
 
-    // get course id
-    const courseId = req.params.id;
-    
-    try {
-      const newCourse = await Course.updateOne({_id: courseId}, req.body)
-      res.status(201).json(newCourse);
-    } catch (error) {
-      res.status(400).json({ message: error.message });
-    }
+  const authHeader = req.headers.authorization;
+
+  if (!authHeader) {
+    return res.status(401).json({ error: 'Unauthorized. No token provided'});
+  }
+
+  const token = authHeader.split(' ')[1];
+
+  const decodedToken = jwt.decode(token, 'supersecret');
+
+  if (decodedToken.isStudent) {
+    return res.json({message: 'Unauthorized'});
+  }
+
+  // get course id
+  const courseId = req.params.id;
+  
+  try {
+    const newCourse = await Course.updateOne({_id: courseId}, req.body)
+    res.status(201).json(newCourse);
+  } catch (error) {
+    res.status(400).json({ message: error.message });
+  }
 });
 
 // delete a course
 router.delete('/:id', async (req, res) => {
+
+  const authHeader = req.headers.authorization;
+
+  if (!authHeader) {
+    return res.status(401).json({ error: 'Unauthorized. No token provided'});
+  }
+
+  const token = authHeader.split(' ')[1];
+
+  const decodedToken = jwt.decode(token, 'supersecret');
+
+  if (decodedToken.isStudent) {
+    return res.json({message: 'Unauthorized'});
+  }
 
   // get course id
   const courseId = req.params.id;
