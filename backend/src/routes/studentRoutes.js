@@ -32,12 +32,6 @@ router.get('/:id', async (req, res) => {
 
 // create a student
 router.post('/', async (req, res) => {
-  // const student = new Student({
-  //   firstName: req.body.firstName,
-  //   lastName: req.body.lastName,
-  //   email: req.body.email,
-  //   password: req.body.password,
-  // });
 
   const student = new Student(req.body);
 
@@ -53,18 +47,7 @@ router.post('/', async (req, res) => {
 router.put('/:id', async (req, res) => {
 
   const studentId = req.params.id;
-    
-  // const student = await Student.findById(studentId);
 
-  // if (student == null) {
-  //   return res.status(404).json({ message: 'Unable to modify student information; Student not found.' });
-  // }
-
-  // student.firstName = req.body.firstName;
-  // student.lastName = req.body.lastName;
-  // student.email = req.body.email;
-  // student.password = req.body.password; // TODO: Implement authentication and authorization properly.
-    
   try {
     // save the newly modified data.
     const newStudent = await Student.updateOne({_id: studentId}, req.body);
@@ -79,12 +62,6 @@ router.delete('/:id', async (req, res) => {
 
   // get student id
   const studentId = req.params.id;
-
-  // const student = await Student.findById(studentId);
-
-  // if (student == null) {
-  //   return res.status(404).json({ message: 'Student record not found.' });
-  // }
 
   try {
     await Student.deleteOne({_id: studentId});

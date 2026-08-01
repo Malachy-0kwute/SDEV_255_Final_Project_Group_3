@@ -1,7 +1,9 @@
 const mongoose = require('mongoose');
+const { Course } = require('./course');
 
 // user schema
 const userSchema = new mongoose.Schema({
+  
   // firstname
   firstName: {
     type: String,
@@ -31,6 +33,9 @@ const userSchema = new mongoose.Schema({
     type: Boolean,
     default: false
   },
+
+  // courses for students registered for.
+  courses: [Course.schema],
 
     // created date
   createdAt: {

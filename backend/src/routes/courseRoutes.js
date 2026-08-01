@@ -47,19 +47,19 @@ router.post('/', async (req, res) => {
     return res.status(401).json({ error: 'Unauthorized. No token provided'});
   }
 
-  const token = authHeader.split(' ')[1];
-
-  const decodedToken = jwt.decode(token, 'supersecret');
-
-  if (decodedToken.isStudent) {
-    return res.json({message: 'Unauthorized'});
-  }
-
-  const course = new Course(req.body);
-
   try {
-    const newCourse = await course.save();
-    res.status(201).json(newCourse);
+    const token = authHeader.split(' ')[1];
+
+    const decodedToken = jwt.decode(token, 'supersecret');
+
+    if (decodedToken.isStudent) {
+      return res.json({message: 'Unauthorized'});
+    }
+
+    const course = new Course(req.body);
+
+      const newCourse = await course.save();
+      res.status(201).json(newCourse);
   } catch (error) {
     res.status(400).json({ message: error.message });
   }
@@ -73,19 +73,19 @@ router.put('/:id', async (req, res) => {
   if (!authHeader) {
     return res.status(401).json({ error: 'Unauthorized. No token provided'});
   }
-
-  const token = authHeader.split(' ')[1];
-
-  const decodedToken = jwt.decode(token, 'supersecret');
-
-  if (decodedToken.isStudent) {
-    return res.json({message: 'Unauthorized'});
-  }
-
-  // get course id
-  const courseId = req.params.id;
   
   try {
+    const token = authHeader.split(' ')[1];
+
+    const decodedToken = jwt.decode(token, 'supersecret');
+
+    if (decodedToken.isStudent) {
+      return res.json({message: 'Unauthorized'});
+    }
+
+    // get course id
+    const courseId = req.params.id;
+  
     const newCourse = await Course.updateOne({_id: courseId}, req.body)
     res.status(201).json(newCourse);
   } catch (error) {
@@ -98,22 +98,22 @@ router.delete('/:id', async (req, res) => {
 
   const authHeader = req.headers.authorization;
 
-  if (!authHeader) {
-    return res.status(401).json({ error: 'Unauthorized. No token provided'});
-  }
-
-  const token = authHeader.split(' ')[1];
-
-  const decodedToken = jwt.decode(token, 'supersecret');
-
-  if (decodedToken.isStudent) {
-    return res.json({message: 'Unauthorized'});
-  }
-
-  // get course id
-  const courseId = req.params.id;
-  
   try {
+    if (!authHeader) {
+      return res.status(401).json({ error: 'Unauthorized. No token provided'});
+    }
+
+    const token = authHeader.split(' ')[1];
+
+    const decodedToken = jwt.decode(token, 'supersecret');
+
+    if (decodedToken.isStudent) {
+      return res.json({message: 'Unauthorized'});
+    }
+
+    // get course id
+    const courseId = req.params.id;
+  
     await Course.deleteOne({_id: courseId});
     res.json('Course record deleted.');
   } catch (error) {
