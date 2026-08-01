@@ -33,13 +33,6 @@ router.get('/:id', async (req, res) => {
 // create a teacher
 router.post('/', async (req, res) => {
 
-  // const teacher = new Teacher({
-  //   firstName: req.body.firstName,
-  //   lastName: req.body.lastName,
-  //   email: req.body.email,
-  //   password: req.body.password,
-  // });
-
  const teacher = new Teacher(req.body);
 
   try {
@@ -55,17 +48,6 @@ router.put('/:id', async (req, res) => {
 
   const teacherId = req.params.id;
     
-  // const teacher = await Teacher.findById(teacherId);
-
-  // if (student == null) {
-  //   return res.status(404).json({ message: 'Unable to modify teacher information; Teacher not found.' });
-  // }
-
-  // teacher.firstName = req.body.firstName;
-  // teacher.lastName = req.body.lastName;
-  // teacher.email = req.body.email;
-  // teacher.password = req.body.password; // TODO: Implement authentication and authorization properly.
-    
   try {
     // save the newly modified data.
     const newTeacher = await Teacher.updateone({_id: teacherId}, req.body);
@@ -78,12 +60,6 @@ router.put('/:id', async (req, res) => {
 // delete a teacher
 router.delete('/:id', async (req, res) => {
   const teacherId = req.params.id;
-
-  // const teacher = await Teacher.findById(teacherId);
-
-  // if (teacher == null) {
-  //   return res.status(404).json({ message: 'Teacher record not found.' });
-  // }
 
   try {
     await Teacher.deleteOne({_id: teacherId});
