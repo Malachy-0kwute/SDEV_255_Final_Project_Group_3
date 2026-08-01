@@ -20,6 +20,10 @@ function Home() {
           Login
         </Link>
 
+        <Link className="btn btn-success me-3" to="/register">
+          Register
+        </Link>
+
         <Link className="btn btn-outline-success" to="/courses">
           View Courses
         </Link>

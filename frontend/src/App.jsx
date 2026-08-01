@@ -6,6 +6,7 @@ import Home from "./pages/Home";
 import Courses from "./pages/Courses";
 import Login from "./pages/Login";
 import AddCourse from "./pages/AddCourse";
+import Register from "./pages/Register";
 
 import "./App.css";
 
@@ -48,6 +49,7 @@ function App() {
           element={<AddCourse onAddCourse={addCourse} />}
         />
         <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
       </Routes>
     </>
   );
