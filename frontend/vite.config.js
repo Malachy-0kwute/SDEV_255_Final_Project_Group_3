@@ -7,6 +7,6 @@ export default defineConfig(({ command }) => ({
   // base: command === "build" ? "/SDEV_255_Final_Project_Group_3/" : "/",
   base: "/SDEV_255_Final_Project_Group_3/",
   build: {
-    outDir: "docs",
+    outDir: "../docs",
   },
 }));
