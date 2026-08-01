@@ -1,8 +1,9 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 function AddCourse() {
   const navigate = useNavigate();
+  const [isLoggedIn, setIsLoggedIn] = useState(!!localStorage.getItem("token"));
 
   const [courseTitle, setCourseTitle] = useState("");
   const [courseCode, setCourseCode] = useState("");
@@ -11,6 +12,12 @@ function AddCourse() {
   const [courseDescription, setCourseDescription] = useState("");
   const [message, setMessage] = useState("");
   const [error, setError] = useState("");
+
+  useEffect(() => {
+    if (!isLoggedIn) {
+      navigate("/login");
+    }
+  }, [isLoggedIn, navigate]);
 
   async function handleSubmit(event) {
     event.preventDefault();
@@ -27,10 +34,11 @@ function AddCourse() {
     };
 
     try {
-      const response = await fetch("http://localhost:3000/api/course", {
+      const response = await fetch("http://localhost:5000/api/course", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
+          "Authorization": `Bearer ${localStorage.getItem("token")}`
         },
         body: JSON.stringify(courseData),
       });
@@ -38,7 +46,7 @@ function AddCourse() {
       const result = await response.json();
 
       if (!response.ok) {
-        throw new Error(result.message || "Unable to add course.");
+        throw new Error(result.error || "Unable to add course.");
       }
 
       setMessage("Course added successfully!");
@@ -59,6 +67,7 @@ function AddCourse() {
   }
 
   return (
+
     <div className="container py-4">
       <div className="card p-4 shadow-sm">
         <h2 className="mb-4">Add Course</h2>

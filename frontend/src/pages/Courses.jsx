@@ -1,6 +1,10 @@
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 function Courses() {
+  const navigate = useNavigate();
+  const [isLoggedIn, setIsLoggedIn] = useState(!!localStorage.getItem("token"));
+
   // Store all courses received from the backend
   const [courses, setCourses] = useState([]);
 
@@ -27,7 +31,7 @@ function Courses() {
       setError("");
 
       // Send a GET request to the backend API
-      const response = await fetch("http://localhost:3000/api/course");
+      const response = await fetch("http://localhost:5000/api/course");
 
       if (!response.ok) {
         throw new Error("Unable to load courses.");
@@ -53,8 +57,13 @@ function Courses() {
 
   // Load the courses when the page first opens
   useEffect(() => {
+    if (!isLoggedIn) {
+      navigate("/login");
+      return;
+    }
+
     getCourses();
-  }, []);
+  }, [isLoggedIn, navigate]);
 
   // Open the edit form and fill it with the selected course information
   function startEditing() {
@@ -102,7 +111,7 @@ function Courses() {
 
       // Send the updated course information to the backend
       const response = await fetch(
-        `http://localhost:3000/api/course/${selectedCourse._id}`,
+        `http://localhost:5000/api/course/${selectedCourse._id}`,
         {
           method: "PUT",
           headers: {
@@ -153,7 +162,7 @@ function Courses() {
 
       // Send a DELETE request to the backend
       const response = await fetch(
-        `http://localhost:3000/api/course/${selectedCourse._id}`,
+        `http://localhost:5000/api/course/${selectedCourse._id}`,
         {
           method: "DELETE",
         }
