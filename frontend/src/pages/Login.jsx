@@ -56,7 +56,7 @@ function Login() {
         }));
 
         // Redirect to home page
-        navigate("/");
+        navigate("/profile");
       }
     })
     .catch(error => {

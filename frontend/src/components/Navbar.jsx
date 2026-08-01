@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import { useState } from "react";
 
 function Navbar() {
   return (
@@ -22,8 +23,8 @@ function Navbar() {
             Courses
           </Link>
 
-          <Link className="nav-link text-white" to="/login">
-            Login
+          <Link className="nav-link text-white" to="/profile">
+            Profile
           </Link>
         </div>
 
