@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 function Courses() {
   const navigate = useNavigate();
   const [isLoggedIn, setIsLoggedIn] = useState(!!localStorage.getItem("token"));
+  const userClaims = JSON.parse(localStorage.getItem("user-claims")) || {};
 
   // Store all courses received from the backend
   const [courses, setCourses] = useState([]);
@@ -404,23 +405,38 @@ function Courses() {
                         "No description provided"}
                     </p>
 
-                    {/* Open the edit course form */}
-                    <button
-                      type="button"
-                      className="btn btn-primary me-2 mt-3"
-                      onClick={startEditing}
-                    >
-                      Edit Course
-                    </button>
+                    <div className="d-flex justify-content-start align-items-center">
+                      {/* Open the edit course form */}
+                      {!userClaims.isStudent && (
+                        <button
+                        type="button"
+                        className="btn btn-primary me-2 mt-3"
+                        onClick={startEditing}
+                        >
+                          Edit Course
+                        </button>
+                      )}
 
-                    {/* Delete the selected course */}
-                    <button
-                      type="button"
-                      className="btn btn-danger mt-3"
-                      onClick={deleteCourse}
-                    >
-                      Delete Course
-                    </button>
+                      {/* Delete the selected course */}
+                      {!userClaims.isStudent && (
+                        <button
+                          type="button"
+                          className="btn btn-danger mt-3"
+                          onClick={deleteCourse}
+                        >
+                          Delete Course
+                        </button>
+                      )}
+                      
+                      {/* Add course to cart button */}
+                      <button
+                          type="button"
+                          className="btn btn-primary mt-3 ms-auto"
+                          onClick={() => alert("implement adding course to cart")}
+                        >
+                          Add To Cart
+                      </button>
+                    </div>
                   </>
                 )
               ) : (

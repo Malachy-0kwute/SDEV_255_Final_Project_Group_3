@@ -4,6 +4,8 @@ import { useNavigate } from "react-router-dom";
 function AddCourse() {
   const navigate = useNavigate();
   const [isLoggedIn, setIsLoggedIn] = useState(!!localStorage.getItem("token"));
+  const userClaims = JSON.parse(localStorage.getItem("user-claims")) || {};
+
 
   const [courseTitle, setCourseTitle] = useState("");
   const [courseCode, setCourseCode] = useState("");
@@ -69,6 +71,14 @@ function AddCourse() {
   return (
 
     <div className="container py-4">
+
+      {userClaims.isStudent && (
+        <div className="alert alert-info pb-2" role="alert">
+          <h5>Students cannot add courses.</h5>
+        </div>
+      )}
+
+      {!userClaims.isStudent && (
       <div className="card p-4 shadow-sm">
         <h2 className="mb-4">Add Course</h2>
 
@@ -166,6 +176,7 @@ function AddCourse() {
           </button>
         </form>
       </div>
+      )}
     </div>
   );
 }
