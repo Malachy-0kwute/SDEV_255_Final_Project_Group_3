@@ -27,7 +27,8 @@ function Home() {
                     localStorage.removeItem("token");
                     localStorage.removeItem("user-claims");
                     setIsLoggedIn(false);
-                    window.location.href = "/login";
+                    window.location.href = "/SDEV_255_Final_Project_Group_3/#/login";
+                    // window.location.href = "/login";
                   }}>
             Logout
           </button>
