@@ -1,0 +1,109 @@
+const jwt = require('jwt-simple');
+const express = require('express');
+const User = require('../models/user');
+
+const router = express.Router();
+const secret = 'supersecret';
+
+// update
+router.put('/update/:id', async (req, res) => {
+
+  const authHeader = req.headers.authorization;
+
+  if (!authHeader) {
+    return res.status(401).json({ error: 'Unauthorized. No token provided'});
+  }
+
+  try {
+    
+    const token = authHeader.split(' ')[1];
+  
+    const decodedToken = jwt.decode(token, secret);
+  
+    // only teachers can update or delete user for now...
+    if (decodedToken.isStudent) {
+      return res.json({message: 'Unauthorized'});
+    }
+
+    const user = await User.findOneAndUpdate({_id: req.params.id}, req.body);
+
+    if (!user) {
+      return res.status(404).json({error: 'User not found'});
+    }
+
+    res.status(201).json({message: 'User updated successfully', userId: user._id});
+
+  } catch (error) {
+      res.status(500).json({error: 'Internal server error' ,  message: error.message });
+  }
+});
+
+// delete
+router.delete('/remove/:id', async (req, res) => {
+
+  const authHeader = req.headers.authorization;
+  
+  if (!authHeader) {
+    return res.status(401).json({ error: 'Unauthorized. No token provided'});
+  }
+  
+  try {
+    const token = authHeader.split(' ')[1];
+
+    const decodedToken = jwt.decode(token, secret);
+
+    // only teachers can update or delete user for now...
+    if (decodedToken.isStudent) {
+      return res.json({message: 'Unauthorized'});
+    }
+
+    const user = await User.findOne({_id: req.params.id});
+
+    if (!user) {
+      return res.status(404).json({error: 'User not found'});
+    }
+
+    const newUserInfo = await user.deleteOne({email: req.body.email});
+    res.status(201).json({message: 'User account deleted successfully'});
+
+  } catch (error) {
+      res.status(500).json({error: 'Internal server error', message: error.message});
+  }
+});
+
+// enroll in courses
+router.put('/course/enroll/:id', async (req, res) => {
+
+  const authHeader = req.headers.authorization;
+
+  if (!authHeader) {
+    return res.status(401).json({ error: 'Unauthorized. No token provided'});
+  }
+
+  try {
+
+    const token = authHeader.split(' ')[1];
+
+    const decodedToken = jwt.decode(token, secret);
+
+    const userRole = await User.findOne({_id: req.params.id});
+
+    // only register students for courses
+    if (userRole.isStudent == false) {
+      return res.status(401).json({ error: 'Only students can register for courses'});
+    }
+
+    const user = await User.findOneAndUpdate({_id: req.params.id}, req.body);
+
+    if (!user) {
+      return res.status(404).json({error: 'User not found'});
+    }
+
+    res.status(201).json({message: 'Courses added successfully', userId: user._id});
+
+  } catch (error) {
+      res.status(500).json({error: 'Internal server error',  message: error.message });
+  }
+});
+
+module.exports = router

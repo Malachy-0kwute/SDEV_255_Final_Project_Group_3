@@ -6,9 +6,15 @@ const connectDB = require("./src/db/db");
 
 // routes
 const courseRoutes = require("./src/routes/courseRoutes");
-// const studentRoutes = require("./src/routes/studentRoutes");
+const authRoutes = require("./src/routes/authRoutes");
+const userRoutes = require("./src/routes/userRoutes");
+
+//#region Deprecated
+//
 // const teacherRoutes = require("./src/routes/teachersRoutes");
-const authRoutes = require("./src/routes/auth");
+// const studentRoutes = require("./src/routes/studentRoutes");
+//
+//#endregion
 
 const app = express();
 const port = process.env.PORT || 5000;
@@ -22,9 +28,13 @@ app.use(express.json());
 
 // define endpoints.
 app.use("/api/course", courseRoutes);
+app.use("/api/auth", authRoutes);
+app.use("/api/user", userRoutes);
+
+//#region Deprecated
 // app.use("/api/student", studentRoutes);
 // app.use("/api/teacher", teacherRoutes);
-app.use("/api/auth", authRoutes);
+//#endregion
 
 app.listen(port, '0.0.0.0', () => {
   console.log(`Server is running...`);

@@ -15,14 +15,8 @@ const courseSchema = new mongoose.Schema({
     required: true
   },
 
-  // prerequisites
-  coursePrerequisites: [String],
-
-  // STEM math
-  courseStemMath: [String],
-
-  // Program
-  courseProgram: String,
+  // subject area
+  courseSubject: [String],
 
   // course credit hours
   courseCredit: {
@@ -30,17 +24,8 @@ const courseSchema = new mongoose.Schema({
     required: true
   },
 
-  // lecture hours
-  courseLectureHours: Number,
-
-  // date of last revision
-  courseLastRevisionDate: Date,
-
   // course description
   courseDescription: String,
-
-  // major learning objectives
-  courseLearningObjectives: [String],
 
   // created date
   createdAt: {
@@ -50,5 +35,7 @@ const courseSchema = new mongoose.Schema({
   }  
 });
 
+const Course = mongoose.model('Courses', courseSchema);
+
 // course model
-module.exports = mongoose.model('Courses', courseSchema);
+module.exports = { Course, courseSchema }
